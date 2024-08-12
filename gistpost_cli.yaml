@@ -30,6 +30,12 @@ Options:
     Value: '"archive.md"'
     Usage: Gist filename
 
+  - Name: Wrap
+    Type: bool
+    Flag: w
+    Value: false
+    Usage: Wrap content within a markdown block
+
   - Name: Public
     Type: bool
     Flag: p

@@ -20,6 +20,7 @@ type Options struct {
 	Token       string // The GITHUB_TOKEN*
 	Description string // Gist description
 	Filename    string // Gist filename
+	Wrap        bool   // Wrap content within a markdown block
 	Public      bool   // Public gist or not
 	Help        bool   // show usage help
 }
@@ -42,6 +43,8 @@ func initVars() {
 		"Gist description")
 	flag.StringVar(&Opts.Filename, "f", "archive.md",
 		"Gist filename")
+	flag.BoolVar(&Opts.Wrap, "w", false,
+		"Wrap content within a markdown block")
 	flag.BoolVar(&Opts.Public, "p", false,
 		"Public gist or not")
 	flag.BoolVar(&Opts.Help, "h", false,
@@ -63,6 +66,9 @@ func initVals() {
 		len(os.Getenv("GP_GIST_F_FILENAME")) != 0 {
 		Opts.Filename = os.Getenv("GP_GIST_F_FILENAME")
 	}
+	if _, exists = os.LookupEnv("GP_GIST_W_WRAP"); Opts.Wrap || exists {
+		Opts.Wrap = true
+	}
 	if _, exists = os.LookupEnv("GP_GIST_P_PUBLIC"); Opts.Public || exists {
 		Opts.Public = true
 	}
@@ -72,7 +78,7 @@ func initVals() {
 
 }
 
-const usageSummary = "  -t\tThe GITHUB_TOKEN* (GP_GIST_T_TOKEN)\n  -d\tGist description (GP_GIST_D_DESCRIPTION)\n  -f\tGist filename (GP_GIST_F_FILENAME)\n  -p\tPublic gist or not (GP_GIST_P_PUBLIC)\n  -h\tshow usage help (GP_GIST_H_HELP)\n\nDetails:\n\n"
+const usageSummary = "  -t\tThe GITHUB_TOKEN* (GP_GIST_T_TOKEN)\n  -d\tGist description (GP_GIST_D_DESCRIPTION)\n  -f\tGist filename (GP_GIST_F_FILENAME)\n  -w\tWrap content within a markdown block (GP_GIST_W_WRAP)\n  -p\tPublic gist or not (GP_GIST_P_PUBLIC)\n  -h\tshow usage help (GP_GIST_H_HELP)\n\nDetails:\n\n"
 
 // Usage function shows help on commandline usage
 func Usage(exit int) {
