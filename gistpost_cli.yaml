@@ -1,0 +1,56 @@
+PackageName: main
+
+# program name, name for the executable
+ProgramName: gistpost
+
+# prefix string before every environment variable
+Prefix: gp-gist
+
+# Name of the structure to hold the values for/from commandline
+StructName: Options
+# The actual variable that hold the commandline paramter values
+StructVar: Opts
+
+Options:
+  - Name: Token
+    Type: string
+    Flag: t
+    Value: '""'
+    Usage: The GITHUB_TOKEN*
+
+  - Name: Description
+    Type: string
+    Flag: d
+    Value: '""'
+    Usage: Gist description
+
+  - Name: Filename
+    Type: string
+    Flag: f
+    Value: '"archive.md"'
+    Usage: Gist filename
+
+  - Name: Public
+    Type: bool
+    Flag: p
+    Value: false
+    Usage: Public gist or not
+
+  # - Name: Verbose
+  #   Type: int
+  #   Usage: Verbose mode (higher numbers increase the verbosity)
+  #   Value: 1
+
+  - Name: Help
+    Type: bool
+    Flag: h
+    Usage: show usage help
+    Value: false
+
+
+# Use the USAGE_SUMMARY in Usage help
+UsageSummary: "TRUE"
+
+UsageLead: "\\nUsage:\\n %s [flags] \\n\\nFlags:\\n\\n"
+
+UsageEnd: |
