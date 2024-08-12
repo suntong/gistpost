@@ -79,6 +79,10 @@ func main() {
 		log.Fatalf("Error reading stdin: %v", err)
 	}
 
+	if Opts.Wrap {
+		content = []byte("```\n" + string(content) + "\n```\n")
+	}
+
 	// Create the gist
 	gist := Gist{
 		Description: Opts.Description,
