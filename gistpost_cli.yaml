@@ -18,6 +18,7 @@ Options:
     Flag: t
     EnvV: true
     Usage: The GITHUB_TOKEN*
+    Required: true
 
   - Name: Description
     Type: string
@@ -29,7 +30,7 @@ Options:
     Type: string
     Flag: f
     EnvV: true
-    Value: '"archive.md"'
+    Value: "archive.md"
     Usage: Gist filename
 
   - Name: Wrap

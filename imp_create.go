@@ -1,11 +1,14 @@
-package main
+////////////////////////////////////////////////////////////////////////////
+// Program: gistpost
+// Purpose: GH gist post/update tool
+// Authors: Tong Sun (c) 2024-2024, All rights reserved
+////////////////////////////////////////////////////////////////////////////
 
-//go:generate sh gistpost_cliGen.sh
+package main
 
 import (
 	"bytes"
 	"encoding/json"
-	"flag"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -33,30 +36,19 @@ type Gist struct {
 ////////////////////////////////////////////////////////////////////////////
 // Function definitions
 
-// Function main
-func main() {
-	// define flags
-	initVars()
-	// popoulate flag variables from ENV
-	initVals()
-	// popoulate flag variables from cli
-	flag.Parse()
-	if Opts.Help {
-		Usage(1)
-	}
-
+func optsCheck() {
 	// == Sanity check on variables from environment
-	if Opts.Token == "" {
-		Usage(0)
-		fmt.Println("\nError: The GP_GIST_T_TOKEN environment variable is required")
+	if opts.Token == "" {
+		gfParser.WriteHelp(os.Stdout)
+		fmt.Println("\nError: The GISTPOST_TOKEN environment variable is required")
 		os.Exit(1)
 	}
-	if Opts.Description == "" {
+	if opts.Description == "" {
 		t := time.Now()
-		Opts.Description = "Archived on " + t.Format(time.DateOnly)
+		opts.Description = "Archived on " + t.Format(time.DateOnly)
 	}
-	if Opts.Filename == "" {
-		Opts.Filename = "archive.md"
+	if opts.Filename == "" {
+		opts.Filename = "archive.md"
 	}
 
 	// == Sanity check on stdin
@@ -68,10 +60,19 @@ func main() {
 	}
 	// Check if stdin is from a pipe
 	if info.Mode()&os.ModeCharDevice != 0 {
-		Usage(0)
+		gfParser.WriteHelp(os.Stdout)
 		fmt.Println("\nError: This program reads input from pipe.")
 		os.Exit(1)
 	}
+}
+
+// // Exec implements the business logic of command `create`
+func (x *CreateCommand) Exec(args []string) error {
+	// err := ...
+	// clis.WarnOn("create::Exec", err)
+	// or,
+	// clis.AbortOn("create::Exec", err)
+	optsCheck()
 
 	// Read content from stdin
 	content, err := ioutil.ReadAll(os.Stdin)
@@ -79,16 +80,16 @@ func main() {
 		log.Fatalf("Error reading stdin: %v", err)
 	}
 
-	if Opts.Wrap {
+	if opts.Wrap {
 		content = []byte("```\n" + string(content) + "\n```\n")
 	}
 
 	// Create the gist
 	gist := Gist{
-		Description: Opts.Description,
-		Public:      Opts.Public,
+		Description: opts.Description,
+		Public:      x.Public,
 		Files: map[string]GistFile{
-			Opts.Filename: {Content: string(content)},
+			opts.Filename: {Content: string(content)},
 		},
 	}
 
@@ -104,7 +105,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error creating POST request: %v", err)
 	}
-	req.Header.Set("Authorization", "token "+Opts.Token)
+	req.Header.Set("Authorization", "token "+opts.Token)
 	req.Header.Set("Content-Type", "application/json")
 
 	resp, err := client.Do(req)
@@ -122,6 +123,7 @@ func main() {
 	json.NewDecoder(resp.Body).Decode(&result)
 	fmt.Println("Gist created: ", result["html_url"])
 
+	return nil
 }
 
 //==========================================================================
