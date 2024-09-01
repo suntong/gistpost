@@ -1,12 +1,19 @@
-templateFile=$GOPATH/src/github.com/go-easygen/easygen/test/commandlineFlag-Name
-[ -s $templateFile.tmpl ] || templateFile=/usr/share/gocode/src/github.com/go-easygen/easygen/test/commandlineFlag-Name
-[ -s $templateFile.tmpl ] || templateFile=/usr/share/doc/easygen/examples/commandlineFlag-Name
-[ -s $templateFile.tmpl ] || {
-  echo No template file found
+prj=gistpost
+pwd=`pwd`
+
+srcDir=$GOPATH/src/github.com/go-easygen/easygen/test
+cd $srcDir || srcDir=/usr/share/gocode/src/github.com/go-easygen/easygen/test
+cd $srcDir || srcDir=/usr/share/doc/easygen/examples
+[ -d "$srcDir" ] || {
+  echo No template files found
   exit 1
 }
-#echo Using $templateFile.tmpl
 
-gpkg=gistpost
-easygen $templateFile ${gpkg}_cli | goimports > ${gpkg}_cliGen.go
-echo ${gpkg}_cliGen.go generated/updated.
+set -x
+
+cd $srcDir
+easygen commandlineGoFlags.header,commandlineGoFlags.ityped.tmpl,commandlineGoFlags "$pwd/$prj"_cli | gofmt > "$pwd/$prj"_cliDef.go
+
+cd $pwd
+go build -v
+echo ${prj}_cliDef.go generated successful

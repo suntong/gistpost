@@ -1,62 +1,54 @@
-PackageName: main
-
 # program name, name for the executable
 ProgramName: gistpost
+Authors: Tong Sun
+Since: 2024
 
-# prefix string before every environment variable
-Prefix: gp-gist
+PackageName: main
 
-# Name of the structure to hold the values for/from commandline
-StructName: Options
-# The actual variable that hold the commandline paramter values
-StructVar: Opts
+Name: gistpost
+Desc: GH gist post/update tool
+Text: Tool to post to GH gist, or update it
+Verbose: true
+Version: true
+
 
 Options:
   - Name: Token
     Type: string
     Flag: t
-    Value: '""'
+    EnvV: true
     Usage: The GITHUB_TOKEN*
 
   - Name: Description
     Type: string
     Flag: d
-    Value: '""'
+    EnvV: true
     Usage: Gist description
 
   - Name: Filename
     Type: string
     Flag: f
+    EnvV: true
     Value: '"archive.md"'
     Usage: Gist filename
 
   - Name: Wrap
     Type: bool
     Flag: w
-    Value: false
+    EnvV: true
     Usage: Wrap content within a markdown block
 
-  - Name: Public
-    Type: bool
-    Flag: p
-    Value: false
-    Usage: Public gist or not
+Command:
 
-  # - Name: Verbose
-  #   Type: int
-  #   Usage: Verbose mode (higher numbers increase the verbosity)
-  #   Value: 1
+  - Name: create
+    Desc: Create a new GH gist entry
+    Text: 'Usage:\n  gistpost [Options] create [-p]'
 
-  - Name: Help
-    Type: bool
-    Flag: h
-    Usage: show usage help
-    Value: false
+    Options:
 
+      - Name: Public
+        Type: bool
+        Flag: p
+        EnvV: true
+        Usage: Public gist or not
 
-# Use the USAGE_SUMMARY in Usage help
-UsageSummary: "TRUE"
-
-UsageLead: "\\nUsage:\\n %s [flags] \\n\\nFlags:\\n\\n"
-
-UsageEnd: |
