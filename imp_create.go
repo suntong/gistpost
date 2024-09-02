@@ -15,6 +15,8 @@ import (
 	"net/http"
 	"os"
 	"time"
+
+	"github.com/go-easygen/go-flags/clis"
 )
 
 ////////////////////////////////////////////////////////////////////////////
@@ -120,11 +122,14 @@ func (x *CreateCommand) gistPrep(content []byte) gistOp {
 }
 
 func gistAction(gop gistOp) error {
+	clis.Verbose(3, "%s Requesting to GitHub %s with %+v",
+		gop.method, gop.url, string(gop.gistJson))
+
 	// Make the request to GitHub Gist API
 	client := &http.Client{}
 	req, err := http.NewRequest(gop.method, gop.url, bytes.NewBuffer(gop.gistJson))
 	if err != nil {
-		log.Fatalf("Error creating POST request: %v", err)
+		log.Fatalf("Error creating %s request: %v", gop.method, err)
 	}
 	req.Header.Set("Authorization", "token "+opts.Token)
 	req.Header.Set("Content-Type", "application/json")
@@ -135,14 +140,15 @@ func gistAction(gop gistOp) error {
 	}
 	defer resp.Body.Close()
 
-	if resp.StatusCode != http.StatusCreated {
-		log.Fatalf("Failed to create gist, status: %s", resp.Status)
+	if !(resp.StatusCode == http.StatusCreated ||
+		resp.StatusCode == http.StatusOK) {
+		log.Fatalf("Failed to %s to gist, status: %s", gop.method, resp.Status)
 	}
 
 	// Print the URL of the created gist
 	var result map[string]interface{}
 	json.NewDecoder(resp.Body).Decode(&result)
-	fmt.Println("Gist created: ", result["html_url"])
+	fmt.Println("Gist url: ", result["html_url"])
 
 	return nil
 }
@@ -154,9 +160,9 @@ func gistAction(gop gistOp) error {
 
 Usage example:
 
-   export GP_GIST_T_TOKEN=github_pat_...
+   export GISTPOST_TOKEN=github_pat_...
 
-   $ cat gistpost_main.go | gistpost -d 'gistpost main' -f main.go -p
-   Gist created:  https://gist.github.com/suntong/923dabcb17c73e7ba435c0067eee3b19
+   $ cat imp_create.go | gistpost create -d 'gistpost main' -f main.go -p
+   Gist created:  https://gist.github.com/suntong/d3203029f4dd088e3b5ed2b0aaee652c
 
 */

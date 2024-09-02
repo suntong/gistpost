@@ -38,3 +38,17 @@ func (x *UpdateCommand) gistPrep(content []byte) gistOp {
 
 	return gistOp{"PATCH", "https://api.github.com/gists/" + x.GistID, gistJson}
 }
+
+/*
+
+Usage example:
+
+   export GISTPOST_TOKEN=github_pat_...
+
+   $ echo abc | gistpost create -w -d 'gistpost test create' -p
+   Gist url:  https://gist.github.com/suntong/25c53ccc65330a8c20f8ba79d4a9eed4
+
+   $ echo abcd | gistpost update -w -d 'gistpost test update' -g 25c53ccc65330a8c20f8ba79d4a9eed4
+   Gist url:  https://gist.github.com/suntong/25c53ccc65330a8c20f8ba79d4a9eed4
+
+*/
