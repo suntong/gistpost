@@ -53,3 +53,15 @@ Command:
         EnvV: true
         Usage: Public gist or not
 
+  - Name: update
+    Desc: Update an existing GH gist entry
+    Text: 'Usage:\n  gistpost [Options] update --id'
+
+    Options:
+
+      - Name: GistID
+        Type: string
+        Flag: g,id
+        EnvV: true
+        Usage: Existing GH gist id*
+        Required: true
