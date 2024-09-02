@@ -7,10 +7,8 @@
 package main
 
 import (
-	"fmt"
-	"os"
-
-	"github.com/go-easygen/go-flags/clis"
+	"encoding/json"
+	"log"
 )
 
 // *** Sub-command: update ***
@@ -20,5 +18,23 @@ func (x *UpdateCommand) Exec(args []string) error {
 	// clis.WarnOn("update::Exec", err)
 	// or,
 	// clis.AbortOn("update::Exec", err)
-	return nil
+	gop := x.gistPrep(readStdin())
+	return gistAction(gop)
+}
+
+func (x *UpdateCommand) gistPrep(content []byte) gistOp {
+	gist := gistT{
+		Description: opts.Description,
+		Files: map[string]gistFile{
+			opts.Filename: {Content: string(content)},
+		},
+	}
+
+	// Convert gist to JSON
+	gistJson, err := json.Marshal(gist)
+	if err != nil {
+		log.Fatalf("Error marshaling Gist JSON: %v", err)
+	}
+
+	return gistOp{"PATCH", "https://api.github.com/gists/" + x.GistID, gistJson}
 }

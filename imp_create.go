@@ -20,14 +20,23 @@ import (
 ////////////////////////////////////////////////////////////////////////////
 // Constant and data type/structure definitions
 
-type GistFile struct {
+type gistFile struct {
 	Content string `json:"content"`
 }
 
-type Gist struct {
+type gistT struct {
 	Description string              `json:"description"`
-	Public      bool                `json:"public"`
-	Files       map[string]GistFile `json:"files"`
+	Files       map[string]gistFile `json:"files"`
+}
+
+type gistCreate struct {
+	gistT
+	Public bool `json:"public"`
+}
+
+type gistOp struct {
+	method, url string
+	gistJson    []byte
 }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -73,7 +82,11 @@ func (x *CreateCommand) Exec(args []string) error {
 	// or,
 	// clis.AbortOn("create::Exec", err)
 	optsCheck()
+	gop := x.gistPrep(readStdin())
+	return gistAction(gop)
+}
 
+func readStdin() []byte {
 	// Read content from stdin
 	content, err := ioutil.ReadAll(os.Stdin)
 	if err != nil {
@@ -83,25 +96,33 @@ func (x *CreateCommand) Exec(args []string) error {
 	if opts.Wrap {
 		content = []byte("```\n" + string(content) + "\n```\n")
 	}
+	return content
+}
 
-	// Create the gist
-	gist := Gist{
+func (x *CreateCommand) gistPrep(content []byte) gistOp {
+	gist := gistT{
 		Description: opts.Description,
-		Public:      x.Public,
-		Files: map[string]GistFile{
+		Files: map[string]gistFile{
 			opts.Filename: {Content: string(content)},
 		},
 	}
 
-	// Convert Gist to JSON
-	gistJson, err := json.Marshal(gist)
+	// Create-gist
+	gc := gistCreate{gist, x.Public}
+
+	// Convert gist to JSON
+	gistJson, err := json.Marshal(gc)
 	if err != nil {
 		log.Fatalf("Error marshaling Gist JSON: %v", err)
 	}
 
-	// Make the POST request to GitHub Gist API
+	return gistOp{"POST", "https://api.github.com/gists", gistJson}
+}
+
+func gistAction(gop gistOp) error {
+	// Make the request to GitHub Gist API
 	client := &http.Client{}
-	req, err := http.NewRequest("POST", "https://api.github.com/gists", bytes.NewBuffer(gistJson))
+	req, err := http.NewRequest(gop.method, gop.url, bytes.NewBuffer(gop.gistJson))
 	if err != nil {
 		log.Fatalf("Error creating POST request: %v", err)
 	}
