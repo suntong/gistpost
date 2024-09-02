@@ -77,10 +77,10 @@ import (
 
 // The optsT type defines all the configurable options from cli.
 type optsT struct {
-	Token       string `short:"t" env:"GISTPOST_TOKEN" description:"The GITHUB_TOKEN*" required:"true"`
-	Description string `short:"d" env:"GISTPOST_DESCRIPTION" description:"Gist description"`
-	Filename    string `short:"f" env:"GISTPOST_FILENAME" description:"Gist filename" default:"archive.md"`
-	Wrap        bool   `short:"w" env:"GISTPOST_WRAP" description:"Wrap content within a markdown block"`
+	Token       string `short:"t" long:"token" env:"GISTPOST_TOKEN" description:"The GITHUB_TOKEN*" required:"true"`
+	Description string `short:"d" long:"desc" env:"GISTPOST_DESCRIPTION" description:"Gist description"`
+	Filename    string `short:"f" long:"fname" env:"GISTPOST_FILENAME" description:"Gist filename" default:"archive.md"`
+	Wrap        bool   `short:"w" long:"wrap" env:"GISTPOST_WRAP" description:"Wrap content within a markdown block"`
 	Verbflg     func() `short:"v" long:"verbose" description:"Verbose mode (Multiple -v options increase the verbosity)"`
 	Verbose     int
 	Version     func() `short:"V" long:"version" description:"Show program version and exit"`

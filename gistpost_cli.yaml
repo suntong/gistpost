@@ -15,27 +15,27 @@ Version: true
 Options:
   - Name: Token
     Type: string
-    Flag: t
+    Flag: t,token
     EnvV: true
     Usage: The GITHUB_TOKEN*
     Required: true
 
   - Name: Description
     Type: string
-    Flag: d
+    Flag: d,desc
     EnvV: true
     Usage: Gist description
 
   - Name: Filename
     Type: string
-    Flag: f
+    Flag: f,fname
     EnvV: true
     Value: "archive.md"
     Usage: Gist filename
 
   - Name: Wrap
     Type: bool
-    Flag: w
+    Flag: w,wrap
     EnvV: true
     Usage: Wrap content within a markdown block
 
