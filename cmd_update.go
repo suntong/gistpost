@@ -30,13 +30,13 @@ var updateCommand UpdateCommand
 
 func init() {
 	gfParser.AddCommand("update",
-		"Update an existing GH gist entry",
+		"Update an existing GH gist entry (file)",
 		"Usage:\n  gistpost [Options] update --id",
 		&updateCommand)
 }
 
 func (x *UpdateCommand) Execute(args []string) error {
-	fmt.Fprintf(os.Stderr, "Update an existing GH gist entry\n")
+	fmt.Fprintf(os.Stderr, "Update an existing GH gist entry (file)\n")
 	// fmt.Fprintf(os.Stderr, "Copyright (C) 2024-2024, Tong Sun\n\n")
 	clis.Setup("gistpost::update", opts.Verbose)
 	clis.Verbose(1, "Doing Update, with %+v, %+v", opts, args)

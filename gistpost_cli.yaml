@@ -42,7 +42,7 @@ Options:
 Command:
 
   - Name: create
-    Desc: Create a new GH gist entry
+    Desc: Create a new GH gist entry (file)
     Text: 'Usage:\n  gistpost [Options] create [-p]'
 
     Options:
@@ -54,7 +54,7 @@ Command:
         Usage: Public gist or not
 
   - Name: update
-    Desc: Update an existing GH gist entry
+    Desc: Update an existing GH gist entry (file)
     Text: 'Usage:\n  gistpost [Options] update --id'
 
     Options:
@@ -65,3 +65,21 @@ Command:
         EnvV: true
         Usage: Existing GH gist id*
         Required: true
+
+  - Name: folder
+    Desc: Upload the whole folder as GH gist
+    Text: 'Usage:\n  gistpost [Options] folder [-p]'
+
+    Options:
+
+      - Name: Dir
+        Type: string
+        Flag: D,dir
+        Usage: Directory to upload as gist*
+        Required: true
+
+      - Name: Public
+        Type: bool
+        Flag: p
+        EnvV: true
+        Usage: Public gist or not
