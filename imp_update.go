@@ -8,6 +8,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 )
 
@@ -19,7 +20,9 @@ func (x *UpdateCommand) Exec(args []string) error {
 	// or,
 	// clis.AbortOn("update::Exec", err)
 	gop := x.gistPrep(readStdin())
-	return gistAction(gop)
+	result := gistAction(gop)
+	fmt.Println("Gist updated:", result["html_url"])
+	return nil
 }
 
 func (x *UpdateCommand) gistPrep(content []byte) gistOp {

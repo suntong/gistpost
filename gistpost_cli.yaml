@@ -49,7 +49,7 @@ Command:
 
       - Name: Public
         Type: bool
-        Flag: p
+        Flag: p,pub
         EnvV: true
         Usage: Public gist or not
 
@@ -68,7 +68,7 @@ Command:
 
   - Name: folder
     Desc: Upload the whole folder as GH gist
-    Text: 'Usage:\n  gistpost [Options] folder [-p]'
+    Text: 'Usage:\n  gistpost [Options] folder [-p] [-e]'
 
     Options:
 
@@ -80,6 +80,12 @@ Command:
 
       - Name: Public
         Type: bool
-        Flag: p
+        Flag: p,pub
         EnvV: true
         Usage: Public gist or not
+
+      - Name: Extra
+        Type: bool
+        Flag: e,extra
+        EnvV: true
+        Usage: Extra files will be added to gist for better name/doc.

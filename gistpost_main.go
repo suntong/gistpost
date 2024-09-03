@@ -28,8 +28,8 @@ import (
 
 var (
 	progname = "gistpost"
-	version  = "1.1.0"
-	date     = "2024-09-02"
+	version  = "1.2.0"
+	date     = "2024-09-03"
 
 	// opts store all the configurable options
 	opts optsT

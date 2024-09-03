@@ -111,7 +111,7 @@ type optsT struct {
 
 // The CreateCommand type defines all the configurable options from cli.
 //  type CreateCommand struct {
-//  	Public	bool	`short:"p" env:"GISTPOST_PUBLIC" description:"Public gist or not"`
+//  	Public	bool	`short:"p" long:"pub" env:"GISTPOST_PUBLIC" description:"Public gist or not"`
 //  }
 
 //
@@ -228,7 +228,8 @@ type optsT struct {
 // The FolderCommand type defines all the configurable options from cli.
 //  type FolderCommand struct {
 //  	Dir	string	`short:"D" long:"dir" description:"Directory to upload as gist*" required:"true"`
-//  	Public	bool	`short:"p" env:"GISTPOST_PUBLIC" description:"Public gist or not"`
+//  	Public	bool	`short:"p" long:"pub" env:"GISTPOST_PUBLIC" description:"Public gist or not"`
+//  	Extra	bool	`short:"e" long:"extra" env:"GISTPOST_EXTRA" description:"Extra files will be added to gist for better name/doc."`
 //  }
 
 //
@@ -240,7 +241,7 @@ type optsT struct {
 //  func init() {
 //  	gfParser.AddCommand("folder",
 //  		"Upload the whole folder as GH gist",
-//  		"Usage:\n  gistpost [Options] folder [-p]",
+//  		"Usage:\n  gistpost [Options] folder [-p] [-e]",
 //  		&folderCommand)
 //  }
 //
@@ -249,7 +250,7 @@ type optsT struct {
 //   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2024-2024, Tong Sun\n\n")
 //   	clis.Setup("gistpost::folder", opts.Verbose)
 //   	clis.Verbose(1, "Doing Folder, with %+v, %+v", opts, args)
-//   	// fmt.Println(x.Dir, x.Public)
+//   	// fmt.Println(x.Dir, x.Public, x.Extra)
 //  	return x.Exec(args)
 //  }
 //

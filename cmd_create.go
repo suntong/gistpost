@@ -20,7 +20,7 @@ import (
 
 // The CreateCommand type defines all the configurable options from cli.
 type CreateCommand struct {
-	Public bool `short:"p" env:"GISTPOST_PUBLIC" description:"Public gist or not"`
+	Public bool `short:"p" long:"pub" env:"GISTPOST_PUBLIC" description:"Public gist or not"`
 }
 
 var createCommand CreateCommand

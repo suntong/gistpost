@@ -10,6 +10,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -85,7 +86,9 @@ func (x *CreateCommand) Exec(args []string) error {
 	// clis.AbortOn("create::Exec", err)
 	optsCheck()
 	gop := x.gistPrep(readStdin())
-	return gistAction(gop)
+	result := gistAction(gop)
+	fmt.Println("Gist created:", result["html_url"])
+	return nil
 }
 
 func readStdin() []byte {
@@ -121,7 +124,7 @@ func (x *CreateCommand) gistPrep(content []byte) gistOp {
 	return gistOp{"POST", "https://api.github.com/gists", gistJson}
 }
 
-func gistAction(gop gistOp) error {
+func gistAction(gop gistOp) map[string]interface{} {
 	clis.Verbose(3, "%s Requesting to GitHub %s with %+v",
 		gop.method, gop.url, string(gop.gistJson))
 
@@ -142,15 +145,17 @@ func gistAction(gop gistOp) error {
 
 	if !(resp.StatusCode == http.StatusCreated ||
 		resp.StatusCode == http.StatusOK) {
-		log.Fatalf("Failed to %s to gist, status: %s", gop.method, resp.Status)
+		// Read the response body
+		bodyBytes, _ := io.ReadAll(resp.Body)
+		log.Fatalf("Failed to %s to gist, status: %s\n  %s",
+			gop.method, resp.Status, bodyBytes)
 	}
 
-	// Print the URL of the created gist
+	// Get the URL of the gist
 	var result map[string]interface{}
 	json.NewDecoder(resp.Body).Decode(&result)
-	fmt.Println("Gist url: ", result["html_url"])
 
-	return nil
+	return result
 }
 
 //==========================================================================
