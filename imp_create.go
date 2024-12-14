@@ -4,7 +4,7 @@
 // Authors: Tong Sun (c) 2024-2024, All rights reserved
 ////////////////////////////////////////////////////////////////////////////
 
-package main
+package gistpost
 
 import (
 	"bytes"
@@ -50,17 +50,17 @@ type gistOp struct {
 
 func optsCheck() {
 	// == Sanity check on variables from environment
-	if opts.Token == "" {
-		gfParser.WriteHelp(os.Stdout)
+	if Opts.Token == "" {
+		GfParser.WriteHelp(os.Stdout)
 		fmt.Println("\nError: The GISTPOST_TOKEN environment variable is required")
 		os.Exit(1)
 	}
-	if opts.Description == "" {
+	if Opts.Description == "" {
 		t := time.Now()
-		opts.Description = "Archived on " + t.Format(time.DateOnly)
+		Opts.Description = "Archived on " + t.Format(time.DateOnly)
 	}
-	if opts.Filename == "" {
-		opts.Filename = "archive.md"
+	if Opts.Filename == "" {
+		Opts.Filename = "archive.md"
 	}
 
 	// == Sanity check on stdin
@@ -72,7 +72,7 @@ func optsCheck() {
 	}
 	// Check if stdin is from a pipe
 	if info.Mode()&os.ModeCharDevice != 0 {
-		gfParser.WriteHelp(os.Stdout)
+		GfParser.WriteHelp(os.Stdout)
 		fmt.Println("\nError: This program reads input from pipe.")
 		os.Exit(1)
 	}
@@ -98,7 +98,7 @@ func readStdin() []byte {
 		log.Fatalf("Error reading stdin: %v", err)
 	}
 
-	if opts.Wrap {
+	if Opts.Wrap {
 		content = []byte("```\n" + string(content) + "\n```\n")
 	}
 	return content
@@ -106,9 +106,9 @@ func readStdin() []byte {
 
 func (x *CreateCommand) gistPrep(content []byte) gistOp {
 	gist := gistT{
-		Description: opts.Description,
+		Description: Opts.Description,
 		Files: map[string]gistFile{
-			opts.Filename: {Content: string(content)},
+			Opts.Filename: {Content: string(content)},
 		},
 	}
 
@@ -134,7 +134,7 @@ func gistAction(gop gistOp) map[string]interface{} {
 	if err != nil {
 		log.Fatalf("Error creating %s request: %v", gop.method, err)
 	}
-	req.Header.Set("Authorization", "token "+opts.Token)
+	req.Header.Set("Authorization", "token "+Opts.Token)
 	req.Header.Set("Content-Type", "application/json")
 
 	resp, err := client.Do(req)

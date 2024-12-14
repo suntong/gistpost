@@ -11,6 +11,7 @@ import (
 	"os"
 
 	"github.com/go-easygen/go-flags/clis"
+	"github.com/suntong/gistpost"
 )
 
 // *** Sub-command: update ***
@@ -19,8 +20,14 @@ import (
 // Constant and data type/structure definitions
 
 // The UpdateCommand type defines all the configurable options from cli.
+/*
 type UpdateCommand struct {
 	GistID string `short:"g" long:"id" env:"GISTPOST_GISTID" description:"Existing GH gist id*" required:"true"`
+}
+*/
+
+type UpdateCommand struct {
+	gistpost.UpdateCommand
 }
 
 var updateCommand UpdateCommand
@@ -29,7 +36,7 @@ var updateCommand UpdateCommand
 // Function definitions
 
 func init() {
-	gfParser.AddCommand("update",
+	gistpost.GfParser.AddCommand("update",
 		"Update an existing GH gist entry (file)",
 		"Usage:\n  gistpost [Options] update --id",
 		&updateCommand)
@@ -38,8 +45,8 @@ func init() {
 func (x *UpdateCommand) Execute(args []string) error {
 	fmt.Fprintf(os.Stderr, "Update an existing GH gist entry (file)\n")
 	// fmt.Fprintf(os.Stderr, "Copyright (C) 2024-2024, Tong Sun\n\n")
-	clis.Setup("gistpost::update", opts.Verbose)
-	clis.Verbose(1, "Doing Update, with %+v, %+v", opts, args)
+	clis.Setup("gistpost::update", gistpost.Opts.Verbose)
+	clis.Verbose(1, "Doing Update, with %+v, %+v", gistpost.Opts, args)
 	// fmt.Println(x.GistID)
 	return x.Exec(args)
 }

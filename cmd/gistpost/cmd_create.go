@@ -11,6 +11,7 @@ import (
 	"os"
 
 	"github.com/go-easygen/go-flags/clis"
+	"github.com/suntong/gistpost"
 )
 
 // *** Sub-command: create ***
@@ -19,8 +20,14 @@ import (
 // Constant and data type/structure definitions
 
 // The CreateCommand type defines all the configurable options from cli.
+/*
 type CreateCommand struct {
 	Public bool `short:"p" long:"pub" env:"GISTPOST_PUBLIC" description:"Public gist or not"`
+}
+*/
+
+type CreateCommand struct {
+	gistpost.CreateCommand
 }
 
 var createCommand CreateCommand
@@ -29,7 +36,7 @@ var createCommand CreateCommand
 // Function definitions
 
 func init() {
-	gfParser.AddCommand("create",
+	gistpost.GfParser.AddCommand("create",
 		"Create a new GH gist entry (file)",
 		"Usage:\n  gistpost [Options] create [-p]",
 		&createCommand)
@@ -38,8 +45,8 @@ func init() {
 func (x *CreateCommand) Execute(args []string) error {
 	fmt.Fprintf(os.Stderr, "Create a new GH gist entry (file)\n")
 	// fmt.Fprintf(os.Stderr, "Copyright (C) 2024-2024, Tong Sun\n\n")
-	clis.Setup("gistpost::create", opts.Verbose)
-	clis.Verbose(1, "Doing Create, with %+v, %+v", opts, args)
+	clis.Setup("gistpost::create", gistpost.Opts.Verbose)
+	clis.Verbose(1, "Doing Create, with %+v, %+v", gistpost.Opts, args)
 	// fmt.Println(x.Public)
 	return x.Exec(args)
 }

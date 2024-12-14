@@ -2,7 +2,7 @@
 //
 // Tool to post to GH gist, or update it
 
-package main
+package gistpost
 
 ////////////////////////////////////////////////////////////////////////////
 // Program: gistpost
@@ -30,11 +30,11 @@ import (
 //          version   = "0.1.0"
 //          date = "2024-09-03"
 
-//  	// opts store all the configurable options
-//  	opts optsT
+//  	// Opts store all the configurable options
+//  	Opts OptsT
 //  )
 //
-//  var gfParser = flags.NewParser(&opts, flags.Default)
+//  var GfParser = flags.NewParser(&Opts, flags.Default)
 
 ////////////////////////////////////////////////////////////////////////////
 // Function definitions
@@ -42,14 +42,14 @@ import (
 //==========================================================================
 // Function main
 //  func main() {
-//  	opts.Version = showVersion
-//  	opts.Verbflg = func() {
-//  		opts.Verbose++
+//  	Opts.Version = showVersion
+//  	Opts.Verbflg = func() {
+//  		Opts.Verbose++
 //  	}
 //
-//  	if _, err := gfParser.Parse(); err != nil {
+//  	if _, err := GfParser.Parse(); err != nil {
 //  		fmt.Println()
-//  		gfParser.WriteHelp(os.Stdout)
+//  		GfParser.WriteHelp(os.Stdout)
 //  		os.Exit(1)
 //  	}
 //  	fmt.Println()
@@ -75,8 +75,8 @@ import (
 
 // Template for type define starts here
 
-// The optsT type defines all the configurable options from cli.
-type optsT struct {
+// The OptsT type defines all the configurable options from cli.
+type OptsT struct {
 	Token       string `short:"t" long:"token" env:"GISTPOST_TOKEN" description:"The GITHUB_TOKEN*" required:"true"`
 	Description string `short:"d" long:"desc" env:"GISTPOST_DESCRIPTION" description:"Gist description"`
 	Filename    string `short:"f" long:"fname" env:"GISTPOST_FILENAME" description:"Gist filename" default:"archive.md"`
@@ -121,7 +121,7 @@ type optsT struct {
 //  // Function definitions
 //
 //  func init() {
-//  	gfParser.AddCommand("create",
+//  	GfParser.AddCommand("create",
 //  		"Create a new GH gist entry (file)",
 //  		"Usage:\n  gistpost [Options] create [-p]",
 //  		&createCommand)
@@ -130,8 +130,8 @@ type optsT struct {
 //  func (x *CreateCommand) Execute(args []string) error {
 //   	fmt.Fprintf(os.Stderr, "Create a new GH gist entry (file)\n")
 //   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2024-2024, Tong Sun\n\n")
-//   	clis.Setup("gistpost::create", opts.Verbose)
-//   	clis.Verbose(1, "Doing Create, with %+v, %+v", opts, args)
+//   	clis.Setup("gistpost::create", Opts.Verbose)
+//   	clis.Verbose(1, "Doing Create, with %+v, %+v", Opts, args)
 //   	// fmt.Println(x.Public)
 //  	return x.Exec(args)
 //  }
@@ -179,7 +179,7 @@ type optsT struct {
 //  // Function definitions
 //
 //  func init() {
-//  	gfParser.AddCommand("update",
+//  	GfParser.AddCommand("update",
 //  		"Update an existing GH gist entry (file)",
 //  		"Usage:\n  gistpost [Options] update --id",
 //  		&updateCommand)
@@ -188,8 +188,8 @@ type optsT struct {
 //  func (x *UpdateCommand) Execute(args []string) error {
 //   	fmt.Fprintf(os.Stderr, "Update an existing GH gist entry (file)\n")
 //   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2024-2024, Tong Sun\n\n")
-//   	clis.Setup("gistpost::update", opts.Verbose)
-//   	clis.Verbose(1, "Doing Update, with %+v, %+v", opts, args)
+//   	clis.Setup("gistpost::update", Opts.Verbose)
+//   	clis.Verbose(1, "Doing Update, with %+v, %+v", Opts, args)
 //   	// fmt.Println(x.GistID)
 //  	return x.Exec(args)
 //  }
@@ -239,7 +239,7 @@ type optsT struct {
 //  // Function definitions
 //
 //  func init() {
-//  	gfParser.AddCommand("folder",
+//  	GfParser.AddCommand("folder",
 //  		"Upload the whole folder as GH gist",
 //  		"Usage:\n  gistpost [Options] folder [-p] [-e]",
 //  		&folderCommand)
@@ -248,8 +248,8 @@ type optsT struct {
 //  func (x *FolderCommand) Execute(args []string) error {
 //   	fmt.Fprintf(os.Stderr, "Upload the whole folder as GH gist\n")
 //   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2024-2024, Tong Sun\n\n")
-//   	clis.Setup("gistpost::folder", opts.Verbose)
-//   	clis.Verbose(1, "Doing Folder, with %+v, %+v", opts, args)
+//   	clis.Setup("gistpost::folder", Opts.Verbose)
+//   	clis.Verbose(1, "Doing Folder, with %+v, %+v", Opts, args)
 //   	// fmt.Println(x.Dir, x.Public, x.Extra)
 //  	return x.Exec(args)
 //  }

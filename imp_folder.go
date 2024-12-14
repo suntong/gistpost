@@ -4,7 +4,7 @@
 // Authors: Tong Sun (c) 2024-2024, All rights reserved
 ////////////////////////////////////////////////////////////////////////////
 
-package main
+package gistpost
 
 import (
 	"encoding/json"
@@ -73,7 +73,7 @@ func (x *FolderCommand) gistPrep() gistOp {
 	}
 
 	gist := gistT{
-		Description: opts.Description,
+		Description: Opts.Description,
 		Files:       files,
 	}
 	gc := gistCreate{gist, x.Public}

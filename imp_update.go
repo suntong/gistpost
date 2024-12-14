@@ -4,7 +4,7 @@
 // Authors: Tong Sun (c) 2024-2024, All rights reserved
 ////////////////////////////////////////////////////////////////////////////
 
-package main
+package gistpost
 
 import (
 	"encoding/json"
@@ -27,9 +27,9 @@ func (x *UpdateCommand) Exec(args []string) error {
 
 func (x *UpdateCommand) gistPrep(content []byte) gistOp {
 	gist := gistT{
-		Description: opts.Description,
+		Description: Opts.Description,
 		Files: map[string]gistFile{
-			opts.Filename: {Content: string(content)},
+			Opts.Filename: {Content: string(content)},
 		},
 	}
 
