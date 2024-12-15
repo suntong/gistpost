@@ -20,7 +20,7 @@ import (
 
 // *** Sub-command: folder ***
 // Exec implements the business logic of command `folder`
-func (x *FolderCommand) Exec(args []string) error {
+func (x *FolderCommand) Exec(args []string) (GistRet, error) {
 	// err := ...
 	// clis.WarnOn("folder::Exec", err)
 	// or,
@@ -28,13 +28,17 @@ func (x *FolderCommand) Exec(args []string) error {
 	gop := x.gistPrep()
 	result := gistAction(gop)
 	clis.Verbose(3, "Got %+v", result)
+	return result, nil
+}
+
+func (x *FolderCommand) Extract(result GistRet) string {
+	//if err != nil { return err }
 	url_http := result["git_push_url"]
 	url_git := strings.Replace(url_http.(string),
 		"https://gist.github.com/", "git@gist.github.com:", 1)
 	abs, _ := filepath.Abs(x.Dir)
-	fmt.Printf("Gist git url: %s\n cd ../\n mv -v %s{,.org}\n git clone %s %[2]s\n cd %[2]s\n",
+	return fmt.Sprintf("Gist git url: %s\n cd ../\n mv -v %s{,.org}\n git clone %s %[2]s\n cd %[2]s\n",
 		url_http, filepath.Base(abs), url_git)
-	return nil
 }
 
 func (x *FolderCommand) gistPrep() gistOp {

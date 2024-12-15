@@ -36,7 +36,7 @@ var createCommand CreateCommand
 // Function definitions
 
 func init() {
-	gistpost.GfParser.AddCommand("create",
+	gfParser.AddCommand("create",
 		"Create a new GH gist entry (file)",
 		"Usage:\n  gistpost [Options] create [-p]",
 		&createCommand)
@@ -48,7 +48,29 @@ func (x *CreateCommand) Execute(args []string) error {
 	clis.Setup("gistpost::create", gistpost.Opts.Verbose)
 	clis.Verbose(1, "Doing Create, with %+v, %+v", gistpost.Opts, args)
 	// fmt.Println(x.Public)
-	return x.Exec(args)
+
+	// == Sanity check on stdin
+	// Get file information about stdin
+	info, err := os.Stdin.Stat()
+	if err != nil {
+		fmt.Println("Error checking stdin:", err)
+		os.Exit(1)
+	}
+	// Check if stdin is from a pipe
+	if info.Mode()&os.ModeCharDevice != 0 {
+		gfParser.WriteHelp(os.Stdout)
+		fmt.Println("\nError: This program reads input from pipe.")
+		os.Exit(1)
+	}
+	if err = gistpost.OptsCheck(); err != nil {
+		gfParser.WriteHelp(os.Stdout)
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	r, err := x.Exec(args)
+	fmt.Print(x.Extract(r))
+	return err
 }
 
 // // Exec implements the business logic of command `create`

@@ -1,9 +1,5 @@
 package gistpost
 
-import (
-	"github.com/go-easygen/go-flags"
-)
-
 type CreateCommand struct {
 	Public bool `short:"p" long:"pub" env:"GISTPOST_PUBLIC" description:"Public gist or not"`
 }
@@ -19,6 +15,5 @@ type UpdateCommand struct {
 }
 
 var (
-	Opts     OptsT
-	GfParser = flags.NewParser(&Opts, flags.Default)
+	Opts OptsT
 )

@@ -14,15 +14,18 @@ import (
 
 // *** Sub-command: update ***
 // Exec implements the business logic of command `update`
-func (x *UpdateCommand) Exec(args []string) error {
+func (x *UpdateCommand) Exec(args []string) (GistRet, error) {
 	// err := ...
 	// clis.WarnOn("update::Exec", err)
 	// or,
 	// clis.AbortOn("update::Exec", err)
 	gop := x.gistPrep(readStdin())
 	result := gistAction(gop)
-	fmt.Println("Gist updated:", result["html_url"])
-	return nil
+	return result, nil
+}
+
+func (x *UpdateCommand) Extract(result GistRet) string {
+	return fmt.Sprintf("Gist updated: %v\n", result["html_url"])
 }
 
 func (x *UpdateCommand) gistPrep(content []byte) gistOp {

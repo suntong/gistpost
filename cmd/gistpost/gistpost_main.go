@@ -17,6 +17,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/go-easygen/go-flags"
 	"github.com/suntong/gistpost"
 )
 
@@ -35,7 +36,7 @@ var (
 	//gistpost.Opts gistpost.OptsT
 )
 
-//var gistpost.GfParser = flags.NewParser(&gistpost.Opts, flags.Default)
+var gfParser = flags.NewParser(&gistpost.Opts, flags.Default)
 
 ////////////////////////////////////////////////////////////////////////////
 // Function definitions
@@ -48,9 +49,9 @@ func main() {
 		gistpost.Opts.Verbose++
 	}
 
-	if _, err := gistpost.GfParser.Parse(); err != nil {
+	if _, err := gfParser.Parse(); err != nil {
 		fmt.Println()
-		gistpost.GfParser.WriteHelp(os.Stdout)
+		gfParser.WriteHelp(os.Stdout)
 		//fmt.Println(err)
 		os.Exit(1)
 	}

@@ -36,7 +36,7 @@ var updateCommand UpdateCommand
 // Function definitions
 
 func init() {
-	gistpost.GfParser.AddCommand("update",
+	gfParser.AddCommand("update",
 		"Update an existing GH gist entry (file)",
 		"Usage:\n  gistpost [Options] update --id",
 		&updateCommand)
@@ -48,7 +48,10 @@ func (x *UpdateCommand) Execute(args []string) error {
 	clis.Setup("gistpost::update", gistpost.Opts.Verbose)
 	clis.Verbose(1, "Doing Update, with %+v, %+v", gistpost.Opts, args)
 	// fmt.Println(x.GistID)
-	return x.Exec(args)
+
+	r, err := x.Exec(args)
+	fmt.Print(x.Extract(r))
+	return err
 }
 
 // // Exec implements the business logic of command `update`

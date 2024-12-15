@@ -11,7 +11,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -42,18 +41,18 @@ type gistOp struct {
 	gistJson    []byte
 }
 
+type GistRet map[string]any
+
 ////////////////////////////////////////////////////////////////////////////
 // Global variables definitions
 
 ////////////////////////////////////////////////////////////////////////////
 // Function definitions
 
-func optsCheck() {
+func OptsCheck() error {
 	// == Sanity check on variables from environment
 	if Opts.Token == "" {
-		GfParser.WriteHelp(os.Stdout)
-		fmt.Println("\nError: The GISTPOST_TOKEN environment variable is required")
-		os.Exit(1)
+		return fmt.Errorf("\nError: GISTPOST_TOKEN environment variable required")
 	}
 	if Opts.Description == "" {
 		t := time.Now()
@@ -62,38 +61,28 @@ func optsCheck() {
 	if Opts.Filename == "" {
 		Opts.Filename = "archive.md"
 	}
-
-	// == Sanity check on stdin
-	// Get file information about stdin
-	info, err := os.Stdin.Stat()
-	if err != nil {
-		fmt.Println("Error checking stdin:", err)
-		os.Exit(1)
-	}
-	// Check if stdin is from a pipe
-	if info.Mode()&os.ModeCharDevice != 0 {
-		GfParser.WriteHelp(os.Stdout)
-		fmt.Println("\nError: This program reads input from pipe.")
-		os.Exit(1)
-	}
+	return nil
 }
 
 // // Exec implements the business logic of command `create`
-func (x *CreateCommand) Exec(args []string) error {
+func (x *CreateCommand) Exec(args []string) (GistRet, error) {
 	// err := ...
 	// clis.WarnOn("create::Exec", err)
 	// or,
 	// clis.AbortOn("create::Exec", err)
-	optsCheck()
+
 	gop := x.gistPrep(readStdin())
 	result := gistAction(gop)
-	fmt.Println("Gist created:", result["html_url"])
-	return nil
+	return result, nil
+}
+
+func (x *CreateCommand) Extract(result GistRet) string {
+	return fmt.Sprintf("Gist created: %v\n", result["html_url"])
 }
 
 func readStdin() []byte {
 	// Read content from stdin
-	content, err := ioutil.ReadAll(os.Stdin)
+	content, err := io.ReadAll(os.Stdin)
 	if err != nil {
 		log.Fatalf("Error reading stdin: %v", err)
 	}
@@ -124,7 +113,7 @@ func (x *CreateCommand) gistPrep(content []byte) gistOp {
 	return gistOp{"POST", "https://api.github.com/gists", gistJson}
 }
 
-func gistAction(gop gistOp) map[string]interface{} {
+func gistAction(gop gistOp) GistRet {
 	clis.Verbose(3, "%s Requesting to GitHub %s with %+v",
 		gop.method, gop.url, string(gop.gistJson))
 
@@ -152,7 +141,7 @@ func gistAction(gop gistOp) map[string]interface{} {
 	}
 
 	// Get the URL of the gist
-	var result map[string]interface{}
+	var result GistRet
 	json.NewDecoder(resp.Body).Decode(&result)
 
 	return result

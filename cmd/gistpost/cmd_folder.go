@@ -38,7 +38,7 @@ var folderCommand FolderCommand
 // Function definitions
 
 func init() {
-	gistpost.GfParser.AddCommand("folder",
+	gfParser.AddCommand("folder",
 		"Upload the whole folder as GH gist",
 		"Usage:\n  gistpost [Options] folder [-p] [-e]",
 		&folderCommand)
@@ -50,7 +50,9 @@ func (x *FolderCommand) Execute(args []string) error {
 	clis.Setup("gistpost::folder", gistpost.Opts.Verbose)
 	clis.Verbose(1, "Doing Folder, with %+v, %+v", gistpost.Opts, args)
 	// fmt.Println(x.Dir, x.Public, x.Extra)
-	return x.Exec(args)
+	r, err := x.Exec(args)
+	fmt.Print(x.Extract(r))
+	return err
 }
 
 // // Exec implements the business logic of command `folder`
