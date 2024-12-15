@@ -13,7 +13,6 @@ import (
 	"io"
 	"log"
 	"net/http"
-	"os"
 	"time"
 
 	"github.com/go-easygen/go-flags/clis"
@@ -61,6 +60,7 @@ func OptsCheck() error {
 	if Opts.Filename == "" {
 		Opts.Filename = "archive.md"
 	}
+	// Not checking .From. Make sure assigned!!
 	return nil
 }
 
@@ -82,7 +82,7 @@ func (x *CreateCommand) Extract(result GistRet) string {
 
 func readStdin() []byte {
 	// Read content from stdin
-	content, err := io.ReadAll(os.Stdin)
+	content, err := io.ReadAll(From)
 	if err != nil {
 		log.Fatalf("Error reading stdin: %v", err)
 	}

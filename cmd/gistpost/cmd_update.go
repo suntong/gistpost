@@ -49,6 +49,7 @@ func (x *UpdateCommand) Execute(args []string) error {
 	clis.Verbose(1, "Doing Update, with %+v, %+v", gistpost.Opts, args)
 	// fmt.Println(x.GistID)
 
+	gistpost.From = os.Stdin
 	r, err := x.Exec(args)
 	fmt.Print(x.Extract(r))
 	return err

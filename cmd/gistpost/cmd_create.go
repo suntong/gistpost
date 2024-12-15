@@ -68,6 +68,7 @@ func (x *CreateCommand) Execute(args []string) error {
 		os.Exit(1)
 	}
 
+	gistpost.From = os.Stdin
 	r, err := x.Exec(args)
 	fmt.Print(x.Extract(r))
 	return err

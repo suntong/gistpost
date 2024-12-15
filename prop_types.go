@@ -1,5 +1,7 @@
 package gistpost
 
+import "io"
+
 type CreateCommand struct {
 	Public bool `short:"p" long:"pub" env:"GISTPOST_PUBLIC" description:"Public gist or not"`
 }
@@ -16,4 +18,5 @@ type UpdateCommand struct {
 
 var (
 	Opts OptsT
+	From io.Reader
 )
