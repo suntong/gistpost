@@ -89,3 +89,7 @@ Command:
         Flag: e,extra
         EnvV: true
         Usage: Extra files will be added to gist for better name/doc.
+
+  - Name: to-raw
+    Desc: Get raw content url from GH gist
+    Text: 'Usage:\n  gistpost [Options] to-raw gist-url'
