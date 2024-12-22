@@ -6,6 +6,8 @@
 
 package gistpost
 
+import "strings"
+
 type ToRawCommand struct {
 }
 
@@ -16,5 +18,19 @@ func (x *ToRawCommand) Exec(args []string) (string, error) {
 	// clis.WarnOn("to-raw::Exec", err)
 	// or,
 	// clis.AbortOn("to-raw::Exec", err)
-	return "", nil
+	r := ""
+	for _, gistURL := range args {
+		r += gistToRawURL(gistURL) + "/raw\n"
+	}
+	return r, nil
+}
+
+func gistToRawURL(gistURL string) string {
+	if !strings.HasPrefix(gistURL, "https://gist.github.com") {
+		return "Invalid Gist URL of " + gistURL
+	}
+
+	rawURL := strings.Replace(gistURL, "gist.github.com", "gist.githubusercontent.com", 1)
+	// rawURL = strings.Replace(rawURL, "/gist/", "/raw/", 1)
+	return rawURL
 }
