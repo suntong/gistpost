@@ -4,7 +4,10 @@
 // Authors: Tong Sun (c) 2024-2024, All rights reserved
 ////////////////////////////////////////////////////////////////////////////
 
-package main
+package gistpost
+
+type ToRawCommand struct {
+}
 
 // *** Sub-command: to-raw ***
 // Exec implements the business logic of command `to-raw`

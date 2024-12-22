@@ -11,6 +11,7 @@ import (
 	"os"
 
 	"github.com/go-easygen/go-flags/clis"
+	"github.com/suntong/gistpost"
 )
 
 // *** Sub-command: to-raw ***
@@ -19,7 +20,10 @@ import (
 // Constant and data type/structure definitions
 
 // The ToRawCommand type defines all the configurable options from cli.
+// type ToRawCommand struct {
+// }
 type ToRawCommand struct {
+	gistpost.ToRawCommand
 }
 
 var to_rawCommand ToRawCommand
@@ -37,8 +41,8 @@ func init() {
 func (x *ToRawCommand) Execute(args []string) error {
 	fmt.Fprintf(os.Stderr, "Get raw content url from GH gist\n")
 	// fmt.Fprintf(os.Stderr, "Copyright (C) 2024-2024, Tong Sun\n\n")
-	clis.Setup("gistpost::to-raw", opts.Verbose)
-	clis.Verbose(1, "Doing ToRaw, with %+v, %+v", opts, args)
+	clis.Setup("gistpost::to-raw", gistpost.Opts.Verbose)
+	clis.Verbose(1, "Doing ToRaw, with %+v, %+v", gistpost.Opts, args)
 	// fmt.Println()
 	return x.Exec(args)
 }
