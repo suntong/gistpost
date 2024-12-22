@@ -44,7 +44,9 @@ func (x *ToRawCommand) Execute(args []string) error {
 	clis.Setup("gistpost::to-raw", gistpost.Opts.Verbose)
 	clis.Verbose(1, "Doing ToRaw, with %+v, %+v", gistpost.Opts, args)
 	// fmt.Println()
-	return x.Exec(args)
+	r, err := x.Exec(args)
+	fmt.Print(r)
+	return err
 }
 
 // // Exec implements the business logic of command `to-raw`
