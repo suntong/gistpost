@@ -14,7 +14,8 @@ builds:
       - arm64
     # Strips debug information to keep binaries small
     ldflags:
-      - -s -w 
+      - -s -w
+    main: ./cmd/gistpost/
 
 nfpms:
   - #id: xx

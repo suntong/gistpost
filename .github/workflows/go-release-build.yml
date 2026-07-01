@@ -1,5 +1,9 @@
 name: build
 
+permissions:
+  contents: write   # Required for creating GitHub Releases
+  # packages: write # If you also push to GHCR later
+
 on:
   push:
     branches:
@@ -38,7 +42,7 @@ jobs:
         name: Build & Tests
         run: |
           go mod tidy
-          go build -v -trimpath
+          go build -v -trimpath ./cmd/gistpost
           go test -v ./...
 
       -
