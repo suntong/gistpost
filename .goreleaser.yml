@@ -1,0 +1,54 @@
+version: 2
+
+# defaults to the name of the repository
+#project_name: gistpost
+
+builds:
+  - env: [CGO_ENABLED=0]
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    # Strips debug information to keep binaries small
+    ldflags:
+      - -s -w 
+
+nfpms:
+  - #id: xx
+    # 3. Using variables for the Linux packaging
+    package_name: "{{ .ProjectName }}"
+    description: Post content read from stdin to github gist
+    file_name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}"
+    homepage: https://github.com/suntong/{{ .ProjectName }}
+    maintainer: Tong Sun <suntong@cpan.org>
+    license: MIT
+    formats:
+      - apk
+      - deb
+      - rpm
+
+archives:
+  - formats:
+      - tar.gz
+    # 2. Reverted back to using variables
+    #name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    format_overrides:
+      - goos: windows
+        formats:
+          - zip
+    # remove README and LICENSE
+    files:
+      - none*
+
+snapshot:
+  version_template: "{{ incpatch .Version }}-snapshot"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
