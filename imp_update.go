@@ -7,42 +7,23 @@
 package gistpost
 
 import (
-	"encoding/json"
 	"fmt"
-	"log"
 )
 
 // *** Sub-command: update ***
 // Exec implements the business logic of command `update`
 func (x *UpdateCommand) Exec(args []string) (GistRet, error) {
-	// err := ...
-	// clis.WarnOn("update::Exec", err)
-	// or,
-	// clis.AbortOn("update::Exec", err)
-	gop := x.gistPrep(readStdin())
+	files := map[string]gistFile{
+		Opts.Filename: {Content: string(readStdin())},
+	}
+	gop := gistOpFromFiles(
+		files, "PATCH", "https://api.github.com/gists/"+x.GistID, false)
 	result := gistAction(gop)
 	return result, nil
 }
 
 func (x *UpdateCommand) Extract(result GistRet) string {
 	return fmt.Sprintf("Gist updated: %v\n", result["html_url"])
-}
-
-func (x *UpdateCommand) gistPrep(content []byte) gistOp {
-	gist := gistT{
-		Description: Opts.Description,
-		Files: map[string]gistFile{
-			Opts.Filename: {Content: string(content)},
-		},
-	}
-
-	// Convert gist to JSON
-	gistJson, err := json.Marshal(gist)
-	if err != nil {
-		log.Fatalf("Error marshaling Gist JSON: %v", err)
-	}
-
-	return gistOp{"PATCH", "https://api.github.com/gists/" + x.GistID, gistJson}
 }
 
 /*

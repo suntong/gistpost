@@ -320,3 +320,63 @@ type OptsT struct {
 // 	return nil
 // }
 // Template for "to-raw" CLI handling ends here
+
+// Template for "append" CLI handling starts here
+////////////////////////////////////////////////////////////////////////////
+// Program: gistpost
+// Purpose: GH gist post/update tool
+// Authors: Tong Sun (c) 2024-2024, All rights reserved
+////////////////////////////////////////////////////////////////////////////
+
+//  package main
+
+//  import (
+//  	"fmt"
+//  	"os"
+//
+//  	"github.com/go-easygen/go-flags/clis"
+//  )
+
+// *** Sub-command: append ***
+
+////////////////////////////////////////////////////////////////////////////
+// Constant and data type/structure definitions
+
+// The AppendCommand type defines all the configurable options from cli.
+//  type AppendCommand struct {
+//  	GistID	string	`short:"g" long:"id" env:"GISTPOST_GISTID" description:"Existing GH gist id*" required:"true"`
+//  	Dir	string	`short:"D" long:"dir" description:"Directory whose files to append*" required:"true"`
+//  	Extra	bool	`short:"e" long:"extra" env:"GISTPOST_EXTRA" description:"Extra files will be added to gist for better name/doc."`
+//  }
+
+//
+//  var appendCommand AppendCommand
+//
+//  ////////////////////////////////////////////////////////////////////////////
+//  // Function definitions
+//
+//  func init() {
+//  	gfParser.AddCommand("append",
+//  		"Append all given folder files to an existing GH gist entry",
+//  		"Usage:\n  gistpost [Options] append -g <gid> -D <dir> [-e]",
+//  		&appendCommand)
+//  }
+//
+//  func (x *AppendCommand) Execute(args []string) error {
+//   	fmt.Fprintf(os.Stderr, "Append all given folder files to an existing GH gist entry\n")
+//   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2024-2024, Tong Sun\n\n")
+//   	clis.Setup("gistpost::append", Opts.Verbose)
+//   	clis.Verbose(1, "Doing Append, with %+v, %+v", Opts, args)
+//   	// fmt.Println(x.GistID, x.Dir, x.Extra)
+//  	return x.Exec(args)
+//  }
+//
+// // Exec implements the business logic of command `append`
+// func (x *AppendCommand) Exec(args []string) error {
+// 	// err := ...
+// 	// clis.WarnOn("append::Exec", err)
+// 	// or,
+// 	// clis.AbortOn("append::Exec", err)
+// 	return nil
+// }
+// Template for "append" CLI handling ends here

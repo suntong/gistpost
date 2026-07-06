@@ -93,3 +93,28 @@ Command:
   - Name: to-raw
     Desc: Get raw content url from GH gist
     Text: 'Usage:\n  gistpost [Options] to-raw gist-url'
+
+  - Name: append
+    Desc: Append all given folder files to an existing GH gist entry
+    Text: 'Usage:\n  gistpost [Options] append -g <gid> -D <dir> [-e]'
+
+    Options:
+
+      - Name: GistID
+        Type: string
+        Flag: g,id
+        EnvV: true
+        Usage: Existing GH gist id*
+        Required: true
+
+      - Name: Dir
+        Type: string
+        Flag: D,dir
+        Usage: Directory whose files to append*
+        Required: true
+
+      - Name: Extra
+        Type: bool
+        Flag: e,extra
+        EnvV: true
+        Usage: Extra files will be added to gist for better name/doc.
