@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////
 // Program: gistpost
 // Purpose: GH gist post/update tool
-// Authors: Tong Sun (c) 2024-2024, All rights reserved
+// Authors: Chenhua Sun (c) 2024-2026, All rights reserved
 ////////////////////////////////////////////////////////////////////////////
 
 package main
@@ -40,7 +40,7 @@ func init() {
 
 func (x *ToRawCommand) Execute(args []string) error {
 	fmt.Fprintf(os.Stderr, "Get raw content url from GH gist\n")
-	// fmt.Fprintf(os.Stderr, "Copyright (C) 2024-2024, Tong Sun\n\n")
+	// fmt.Fprintf(os.Stderr, "Copyright (C) 2024-2026, Chenhua Sun\n\n")
 	clis.Setup("gistpost::to-raw", gistpost.Opts.Verbose)
 	clis.Verbose(1, "Doing ToRaw, with %+v, %+v", gistpost.Opts, args)
 	// fmt.Println()

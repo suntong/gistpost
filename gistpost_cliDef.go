@@ -7,7 +7,7 @@ package gistpost
 ////////////////////////////////////////////////////////////////////////////
 // Program: gistpost
 // Purpose: GH gist post/update tool
-// Authors: Tong Sun (c) 2024-2024, All rights reserved
+// Authors: Chenhua Sun (c) 2024-2026, All rights reserved
 ////////////////////////////////////////////////////////////////////////////
 
 import (
@@ -19,6 +19,9 @@ import (
 
 // Template for main starts here
 
+//  // for `go generate -x`
+//  //go:generate sh gistpost_cliGen.sh
+
 //////////////////////////////////////////////////////////////////////////
 // Constant and data type/structure definitions
 
@@ -28,13 +31,13 @@ import (
 //  var (
 //          progname  = "gistpost"
 //          version   = "0.1.0"
-//          date = "2024-12-22"
+//          date = "2026-07-07"
 
 //  	// Opts store all the configurable options
 //  	Opts OptsT
 //  )
 //
-//  var GfParser = flags.NewParser(&Opts, flags.Default)
+//  var gfParser = flags.NewParser(&Opts, flags.Default)
 
 ////////////////////////////////////////////////////////////////////////////
 // Function definitions
@@ -47,9 +50,9 @@ import (
 //  		Opts.Verbose++
 //  	}
 //
-//  	if _, err := GfParser.Parse(); err != nil {
+//  	if _, err := gfParser.Parse(); err != nil {
 //  		fmt.Println()
-//  		GfParser.WriteHelp(os.Stdout)
+//  		gfParser.WriteHelp(os.Stdout)
 //  		os.Exit(1)
 //  	}
 //  	fmt.Println()
@@ -62,7 +65,7 @@ import (
 //  func showVersion() {
 //   	fmt.Fprintf(os.Stderr, "gistpost - GH gist post/update tool, version %s\n", version)
 //  	fmt.Fprintf(os.Stderr, "Built on %s\n", date)
-//   	fmt.Fprintf(os.Stderr, "Copyright (C) 2024-2024, Tong Sun\n\n")
+//   	fmt.Fprintf(os.Stderr, "Copyright (C) 2024-2026, Chenhua Sun\n\n")
 //  	fmt.Fprintf(os.Stderr, "Tool to post to GH gist, or update it\n")
 //  	os.Exit(0)
 //  }
@@ -92,10 +95,10 @@ type OptsT struct {
 ////////////////////////////////////////////////////////////////////////////
 // Program: gistpost
 // Purpose: GH gist post/update tool
-// Authors: Tong Sun (c) 2024-2024, All rights reserved
+// Authors: Chenhua Sun (c) 2024-2026, All rights reserved
 ////////////////////////////////////////////////////////////////////////////
 
-//  package main
+//  package gistpost
 
 //  import (
 //  	"fmt"
@@ -121,7 +124,7 @@ type OptsT struct {
 //  // Function definitions
 //
 //  func init() {
-//  	GfParser.AddCommand("create",
+//  	gfParser.AddCommand("create",
 //  		"Create a new GH gist entry (file)",
 //  		"Usage:\n  gistpost [Options] create [-p]",
 //  		&createCommand)
@@ -129,7 +132,7 @@ type OptsT struct {
 //
 //  func (x *CreateCommand) Execute(args []string) error {
 //   	fmt.Fprintf(os.Stderr, "Create a new GH gist entry (file)\n")
-//   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2024-2024, Tong Sun\n\n")
+//   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2024-2026, Chenhua Sun\n\n")
 //   	clis.Setup("gistpost::create", Opts.Verbose)
 //   	clis.Verbose(1, "Doing Create, with %+v, %+v", Opts, args)
 //   	// fmt.Println(x.Public)
@@ -150,10 +153,10 @@ type OptsT struct {
 ////////////////////////////////////////////////////////////////////////////
 // Program: gistpost
 // Purpose: GH gist post/update tool
-// Authors: Tong Sun (c) 2024-2024, All rights reserved
+// Authors: Chenhua Sun (c) 2024-2026, All rights reserved
 ////////////////////////////////////////////////////////////////////////////
 
-//  package main
+//  package gistpost
 
 //  import (
 //  	"fmt"
@@ -179,7 +182,7 @@ type OptsT struct {
 //  // Function definitions
 //
 //  func init() {
-//  	GfParser.AddCommand("update",
+//  	gfParser.AddCommand("update",
 //  		"Update an existing GH gist entry (file)",
 //  		"Usage:\n  gistpost [Options] update --id",
 //  		&updateCommand)
@@ -187,7 +190,7 @@ type OptsT struct {
 //
 //  func (x *UpdateCommand) Execute(args []string) error {
 //   	fmt.Fprintf(os.Stderr, "Update an existing GH gist entry (file)\n")
-//   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2024-2024, Tong Sun\n\n")
+//   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2024-2026, Chenhua Sun\n\n")
 //   	clis.Setup("gistpost::update", Opts.Verbose)
 //   	clis.Verbose(1, "Doing Update, with %+v, %+v", Opts, args)
 //   	// fmt.Println(x.GistID)
@@ -208,10 +211,10 @@ type OptsT struct {
 ////////////////////////////////////////////////////////////////////////////
 // Program: gistpost
 // Purpose: GH gist post/update tool
-// Authors: Tong Sun (c) 2024-2024, All rights reserved
+// Authors: Chenhua Sun (c) 2024-2026, All rights reserved
 ////////////////////////////////////////////////////////////////////////////
 
-//  package main
+//  package gistpost
 
 //  import (
 //  	"fmt"
@@ -239,7 +242,7 @@ type OptsT struct {
 //  // Function definitions
 //
 //  func init() {
-//  	GfParser.AddCommand("folder",
+//  	gfParser.AddCommand("folder",
 //  		"Upload the whole folder as GH gist",
 //  		"Usage:\n  gistpost [Options] folder [-p] [-e]",
 //  		&folderCommand)
@@ -247,7 +250,7 @@ type OptsT struct {
 //
 //  func (x *FolderCommand) Execute(args []string) error {
 //   	fmt.Fprintf(os.Stderr, "Upload the whole folder as GH gist\n")
-//   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2024-2024, Tong Sun\n\n")
+//   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2024-2026, Chenhua Sun\n\n")
 //   	clis.Setup("gistpost::folder", Opts.Verbose)
 //   	clis.Verbose(1, "Doing Folder, with %+v, %+v", Opts, args)
 //   	// fmt.Println(x.Dir, x.Public, x.Extra)
@@ -268,10 +271,10 @@ type OptsT struct {
 ////////////////////////////////////////////////////////////////////////////
 // Program: gistpost
 // Purpose: GH gist post/update tool
-// Authors: Tong Sun (c) 2024-2024, All rights reserved
+// Authors: Chenhua Sun (c) 2024-2026, All rights reserved
 ////////////////////////////////////////////////////////////////////////////
 
-//  package main
+//  package gistpost
 
 //  import (
 //  	"fmt"
@@ -304,9 +307,9 @@ type OptsT struct {
 //
 //  func (x *ToRawCommand) Execute(args []string) error {
 //   	fmt.Fprintf(os.Stderr, "Get raw content url from GH gist\n")
-//   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2024-2024, Tong Sun\n\n")
-//   	clis.Setup("gistpost::to-raw", opts.Verbose)
-//   	clis.Verbose(1, "Doing ToRaw, with %+v, %+v", opts, args)
+//   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2024-2026, Chenhua Sun\n\n")
+//   	clis.Setup("gistpost::to-raw", Opts.Verbose)
+//   	clis.Verbose(1, "Doing ToRaw, with %+v, %+v", Opts, args)
 //   	// fmt.Println()
 //  	return x.Exec(args)
 //  }
@@ -325,10 +328,10 @@ type OptsT struct {
 ////////////////////////////////////////////////////////////////////////////
 // Program: gistpost
 // Purpose: GH gist post/update tool
-// Authors: Tong Sun (c) 2024-2024, All rights reserved
+// Authors: Chenhua Sun (c) 2024-2026, All rights reserved
 ////////////////////////////////////////////////////////////////////////////
 
-//  package main
+//  package gistpost
 
 //  import (
 //  	"fmt"
@@ -364,7 +367,7 @@ type OptsT struct {
 //
 //  func (x *AppendCommand) Execute(args []string) error {
 //   	fmt.Fprintf(os.Stderr, "Append all given folder files to an existing GH gist entry\n")
-//   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2024-2024, Tong Sun\n\n")
+//   	// fmt.Fprintf(os.Stderr, "Copyright (C) 2024-2026, Chenhua Sun\n\n")
 //   	clis.Setup("gistpost::append", Opts.Verbose)
 //   	clis.Verbose(1, "Doing Append, with %+v, %+v", Opts, args)
 //   	// fmt.Println(x.GistID, x.Dir, x.Extra)

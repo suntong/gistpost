@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////
 // Program: gistpost
 // Purpose: GH gist post/update tool
-// Authors: Tong Sun (c) 2024-2024, All rights reserved
+// Authors: Chenhua Sun (c) 2024-2026, All rights reserved
 ////////////////////////////////////////////////////////////////////////////
 
 package main
@@ -40,7 +40,8 @@ var appendCommand AppendCommand
 func init() {
 	gfParser.AddCommand("append",
 		"Append all given folder files to an existing GH gist entry",
-		"Usage:\n  gistpost [Options] append -g <gid> -D <dir> [-e]",
+		`Usage:\n  gistpost [Options] append -g <gid> -D <dir> [-e]
+`,
 		&appendCommand)
 }
 

@@ -1,9 +1,11 @@
+# GoFlags based cli def file
+
 # program name, name for the executable
 ProgramName: gistpost
-Authors: Tong Sun
+Authors: Chenhua Sun
 Since: 2024
 
-PackageName: main
+PackageName: gistpost
 
 Name: gistpost
 Desc: GH gist post/update tool

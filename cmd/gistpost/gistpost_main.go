@@ -7,7 +7,7 @@ package main
 ////////////////////////////////////////////////////////////////////////////
 // Program: gistpost
 // Purpose: GH gist post/update tool
-// Authors: Tong Sun (c) 2024-2024, All rights reserved
+// Authors: Chenhua Sun (c) 2024-2026, All rights reserved
 ////////////////////////////////////////////////////////////////////////////
 
 //go:generate sh gistpost_cliGen.sh
@@ -65,7 +65,7 @@ func main() {
 func showVersion() {
 	fmt.Fprintf(os.Stderr, "gistpost - GH gist post/update tool, version %s\n", version)
 	fmt.Fprintf(os.Stderr, "Built on %s\n", date)
-	fmt.Fprintf(os.Stderr, "Copyright (C) 2024-2024, Tong Sun\n\n")
+	fmt.Fprintf(os.Stderr, "Copyright (C) 2024-2026, Chenhua Sun\n\n")
 	fmt.Fprintf(os.Stderr, "Tool to post to GH gist, or update it\n")
 	os.Exit(0)
 }
