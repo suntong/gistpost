@@ -42,7 +42,7 @@ jobs:
         name: Build & Tests
         run: |
           go mod tidy
-          go build -v -trimpath ./cmd/gistpost
+          go build -o ./cmd/gistpost/gistpost -v -trimpath ./cmd/gistpost
           go test -v ./...
 
       -
