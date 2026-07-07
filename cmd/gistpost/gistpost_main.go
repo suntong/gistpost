@@ -29,8 +29,8 @@ import (
 
 var (
 	progname = "gistpost"
-	version  = "2.2.1"
-	date     = "2024-12-22"
+	version  = "2.3.0"
+	date     = "2026-07-07"
 
 	// gistpost.Opts store all the configurable options
 	//gistpost.Opts gistpost.OptsT
